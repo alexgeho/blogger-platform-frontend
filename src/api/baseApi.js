@@ -1,6 +1,6 @@
 // src/api/baseApi.js
 
-const BASE_URL = 'http://localhost:3000'; // NestJS
+const BASE_URL = 'http://localhost:5077'; // NestJS
 
 function getAccessToken() {
   return localStorage.getItem('accessToken');

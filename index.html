@@ -1,13 +1,42 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>blogger-platform-frontend</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./src/style.css">
+  <title>blogger-platform-frontend</title>
+</head>
+
+<body>
+  <h1>Blogger Platform</h1>
+
+  <section id="login">
+    <h2>Login</h2>
+    <input id="loginInput" placeholder="login or email" />
+    <input id="passwordInput" type="password" placeholder="password" />
+    <button id="loginBtn">Login</button>
+  </section>
+
+  <section id="me" style="display:none;">
+    <h2>Current user</h2>
+    <pre id="meResult"></pre>
+    <button id="logoutBtn">Logout</button>
+  </section>
+
+  <section id="blogs">
+    <h2>Blogs</h2>
+    <ul id="blogsList"></ul>
+  </section>
+
+  <section id="posts">
+    <h2>Posts</h2>
+    <ul id="postsList"></ul>
+  </section>
+
+  <script type="module" src="/src/main.js"></script>
+
+</body>
+
 </html>
