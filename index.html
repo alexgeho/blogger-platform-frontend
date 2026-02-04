@@ -10,33 +10,52 @@
 </head>
 
 <body>
-  <h1>Blogger Platform</h1>
 
-  <section id="login">
-    <h2>Login</h2>
-    <input id="loginInput" placeholder="login or email" />
-    <input id="passwordInput" type="password" placeholder="password" />
-    <button id="loginBtn">Login</button>
-  </section>
+  <!-- HEADER -->
+  <header class="header">
+    <h1>Blogger Platform</h1>
 
-  <section id="me" style="display:none;">
-    <h2>Current user</h2>
-    <pre id="meResult"></pre>
-    <button id="logoutBtn">Logout</button>
-  </section>
+    <div class="auth">
 
-  <section id="blogs">
-    <h2>Blogs</h2>
-    <ul id="blogsList"></ul>
-  </section>
+      <!-- LOGIN -->
+      <section id="login">
+        <input id="loginInput" placeholder="login or email" />
+        <input id="passwordInput" type="password" placeholder="password" />
+        <button id="loginBtn">Login</button>
+      </section>
 
-  <section id="posts">
-    <h2>Posts</h2>
-    <ul id="postsList"></ul>
-  </section>
+      <!-- CURRENT USER -->
+      <section id="me" style="display:none;">
+        <pre id="meResult"></pre>
+        <button id="logoutBtn">Logout</button>
+      </section>
+
+    </div>
+  </header>
+
+  <!-- MAIN LAYOUT -->
+  <main class="layout">
+
+    <!-- BLOGS (SIDEBAR) -->
+    <section id="blogs" class="blogs">
+      <h2>Blogs</h2>
+      <ul id="blogsList"></ul>
+    </section>
+
+    <!-- POSTS (FEED) -->
+    <section id="posts" class="posts">
+      <h2>Posts</h2>
+      <ul id="postsList"></ul>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    Backend demo • Blogger Platform
+  </footer>
 
   <script type="module" src="/src/main.js"></script>
 
 </body>
-
 </html>
