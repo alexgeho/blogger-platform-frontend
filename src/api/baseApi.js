@@ -24,9 +24,9 @@ async function request(path, options = {}) {
   const response = await fetch(`${BASE_URL}${path}`, {
     ...options,
     headers: buildHeaders(options.headers),
+    credentials: 'include', // 🔥 ВАЖНО
   });
 
-  // 204 No Content — ничего не парсим
   if (response.status === 204) {
     return null;
   }
@@ -34,21 +34,19 @@ async function request(path, options = {}) {
   let data = null;
   try {
     data = await response.json();
-  } catch {
-    // если тело пустое или не JSON
-  }
+  } catch {}
 
   if (!response.ok) {
-    const error = {
+    throw {
       status: response.status,
       message: data?.message || 'Request failed',
       errors: data?.errors,
     };
-    throw error;
   }
 
   return data;
 }
+
 
 export const api = {
   get: (path) => request(path),

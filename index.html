@@ -17,21 +17,32 @@
 
     <div class="auth">
 
-      <!-- LOGIN -->
-      <section id="login">
-        <input id="loginInput" placeholder="login or email" />
-        <input id="passwordInput" type="password" placeholder="password" />
-        <button id="loginBtn">Login</button>
-      </section>
+      <div class="auth-actions">
+        <button id="toggleLogin">Login</button>
+        <button id="toggleRegister">Register</button>
+      </div>
 
-      <!-- CURRENT USER -->
-      <section id="me" style="display:none;">
-        <pre id="meResult"></pre>
-        <button id="logoutBtn">Logout</button>
-      </section>
+      <div class="auth-forms">
 
+        <!-- LOGIN -->
+        <form id="loginForm" class="auth-form">
+          <input name="loginOrEmail" placeholder="login or email" />
+          <input name="password" type="password" placeholder="password" />
+          <button type="submit">Send</button>
+        </form>
+
+        <!-- REGISTER -->
+        <form id="registerForm" class="auth-form">
+          <input name="login" placeholder="login" />
+          <input name="email" placeholder="email" />
+          <input name="password" type="password" placeholder="password" />
+          <button type="submit">Send</button>
+        </form>
+
+      </div>
     </div>
   </header>
+
 
   <!-- MAIN LAYOUT -->
   <main class="layout">
@@ -55,7 +66,8 @@
     Backend demo • Blogger Platform
   </footer>
 
-  <script type="module" src="/src/main.js"></script>
+  <script type="module" src="/src/main.mjs"></script>
 
 </body>
+
 </html>
