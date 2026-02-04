@@ -1,4 +1,7 @@
-/* RESET */
+/* =======================
+   RESET
+======================= */
+
 * {
   box-sizing: border-box;
 }
@@ -8,60 +11,77 @@ body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   background: #f6f7f9;
   color: #222;
+  font-size: 1rem; /* base font size */
 }
 
-/* HEADER */
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+/* =======================
+   HEADER (MOBILE FIRST)
+======================= */
 
 .header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  gap: 8px;
 
-  padding: 16px 24px;
+  padding: 16px;
   background: #111;
   color: #fff;
 }
 
 .header h1 {
   margin: 0;
-  font-size: 20px;
+  font-size: 1.25rem;
 }
 
-/* AUTH */
+/* =======================
+   AUTH
+======================= */
 
 .auth section {
   display: flex;
   gap: 8px;
   align-items: center;
+  width: 100%;
 }
 
 .auth input {
   padding: 6px 8px;
+  flex: 1;
 }
 
 .auth button {
-  padding: 6px 10px;
+  padding: 6px 12px;
   cursor: pointer;
 }
 
-/* LAYOUT */
+/* =======================
+   LAYOUT (MOBILE)
+======================= */
 
 .layout {
   display: grid;
-  grid-template-columns: 260px 1fr;
+  grid-template-columns: 1fr;
   min-height: calc(100vh - 64px - 40px);
 }
 
-/* BLOGS */
+/* =======================
+   BLOGS (MOBILE)
+======================= */
 
 .blogs {
   background: #fff;
-  border-right: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
   padding: 16px;
 }
 
 .blogs h2 {
-  margin-top: 0;
+  margin: 0 0 12px 0;
+  font-size: 1.1rem;
 }
 
 #blogsList {
@@ -81,33 +101,40 @@ body {
   background: #eee;
 }
 
-/* POSTS */
+/* =======================
+   POSTS (MOBILE)
+======================= */
 
 .posts {
   padding: 16px;
 }
 
 .posts h2 {
-  margin-top: 0;
+  margin: 0 0 12px 0;
+  font-size: 1.1rem;
 }
 
-/* POSTS GRID */
+/* =======================
+   POSTS GRID (MOBILE)
+======================= */
 
 #postsList {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
-  gap: 1rem;
+  grid-template-columns: 1fr;
+  gap: 16px;
 }
 
-/* POST CARD */
+/* =======================
+   POST CARD
+======================= */
 
 #postsList li {
   background: #fff;
   border: 1px solid #ddd;
-  border-radius: 0.5rem;
+  border-radius: 8px;
 
-  padding: 1rem;
-  min-height: 6rem;
+  padding: 16px;
+  min-height: 96px;
 
   display: flex;
   align-items: center;
@@ -119,12 +146,14 @@ body {
 }
 
 #postsList li:hover {
-  box-shadow: 0 0.5rem 1.2rem rgba(0, 0, 0, 0.08);
-  transform: translateY(-0.15rem);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
   cursor: pointer;
 }
 
-/* FOOTER */
+/* =======================
+   FOOTER
+======================= */
 
 .footer {
   height: 40px;
@@ -135,5 +164,41 @@ body {
   align-items: center;
   justify-content: center;
 
-  font-size: 13px;
+  font-size: 0.8rem;
+}
+
+/* =======================
+   DESKTOP (≥ 768px)
+======================= */
+
+@media (min-width: 768px) {
+  .header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+  }
+
+  .layout {
+    grid-template-columns: 260px 1fr;
+  }
+
+  .blogs {
+    border-bottom: none;
+    border-right: 1px solid #ddd;
+  }
+
+  #postsList {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* =======================
+   LARGE DESKTOP (≥ 1024px)
+======================= */
+
+@media (min-width: 1024px) {
+  #postsList {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
