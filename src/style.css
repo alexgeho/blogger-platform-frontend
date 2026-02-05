@@ -26,7 +26,6 @@ ul {
 
 .header {
   height: 96px;
-  /* ОДНА высота навсегда */
   padding: 0 16px;
 
   display: flex;
@@ -79,9 +78,9 @@ ul {
   /* появляется под кнопками */
 
   right: 0;
-  margin-right: 8px;
+  margin-right: -25px;
 
-  width: calc(80vw - 24px);
+  width: calc(80vw);
   max-width: 420px;
 
   display: grid;
@@ -104,17 +103,19 @@ ul {
 .auth-form button {
   width: 100%;
   padding: 8px;
-  font-size: 14px;
+  font-size: 1rem;
   border-radius: 6px;
-  border: 1px solid #ccc;
+
 }
+
 
 .auth-form button {
-  background: #fff;
+  background: #d2d2d2;
   cursor: pointer;
+  border: 3px solid #ccc;
+
 }
 
-/* открытое состояние */
 .auth-form.open {
   opacity: 1;
   transform: translateY(0);
