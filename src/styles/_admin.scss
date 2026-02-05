@@ -1,45 +1,94 @@
 /* =======================
-   ADMIN PANEL
+   LAYOUT
 ======================= */
 
-/* BLOGS SECTION */
-
-.blogs {
-  position: relative;
-  padding: 16px;
+.layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  min-height: calc(100vh - 64px);
 }
 
-/* CREATE BLOG BUTTON */
+/* =======================
+   BLOGS (LEFT COLUMN)
+======================= */
+
+.blogs {
+  padding: 24px;
+  background: #fafafa;
+  border-right: 1px solid #e5e7eb;
+}
+
+.blogs h2 {
+  margin-bottom: 12px;
+}
 
 #createBlogBtn {
   margin-bottom: 12px;
 }
 
-/* CREATE BLOG FORM */
+/* =======================
+   BLOG NOTICE
+======================= */
+
+#blogNotice {
+  margin-bottom: 12px;
+  padding: 8px 12px;
+
+  background: #e8f5e9;
+  color: #1b5e20;
+  border: 1px solid #c8e6c9;
+  border-radius: 8px;
+
+  font-size: 13px;
+}
+
+/* =======================
+   FORMS (BLOG + POST)
+======================= */
 
 .admin-form {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 16px;
   margin-bottom: 16px;
-  padding: 12px;
 
   display: flex;
   flex-direction: column;
-  gap: 8px;
-
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  background: #fafafa;
+  gap: 10px;
 }
 
-.admin-form input {
-  padding: 6px 8px;
+.admin-form input,
+.admin-form textarea {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
   font-size: 14px;
+}
+
+.admin-form textarea {
+  resize: vertical;
+  min-height: 80px;
 }
 
 .admin-form button {
   align-self: flex-start;
+  background: #111827;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 14px;
+  cursor: pointer;
 }
 
-/* BLOG LIST */
+.admin-form button:hover {
+  background: #000000;
+}
+
+/* =======================
+   BLOG LIST
+======================= */
 
 #adminBlogsList {
   display: flex;
@@ -47,63 +96,138 @@
   gap: 8px;
 }
 
-/* SINGLE BLOG ITEM */
+/* SINGLE BLOG ITEM (CARD) */
 
 .blog-item {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: 8px;
 
-  padding: 8px 10px;
-  border: 1px solid #e0e0e0;
+  padding: 12px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+}
+
+.blog-item:hover {
+  background: #fafafa;
+  border-color: #d1d5db;
+}
+
+/* BLOG TITLE */
+
+.blog-title {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.4;
+
+  word-break: break-word;
+}
+
+/* BLOG ACTIONS */
+
+.blog-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* CREATE POST BUTTON */
+
+.blog-actions button:first-child {
+  background: #2563eb;
+  color: #ffffff;
+  border: none;
   border-radius: 6px;
-  background: #fff;
-}
-
-.blog-item span {
-  font-weight: 500;
-  margin-right: auto;
-}
-
-/* BLOG ACTION BUTTONS */
-
-.blog-item button {
+  padding: 4px 10px;
   font-size: 12px;
-  padding: 4px 8px;
   cursor: pointer;
 }
 
-/* TOAST (LOCAL, INSIDE BLOGS) */
-
-#toast {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-
-  padding: 8px 12px;
-  border-radius: 6px;
-
-  background: #111;
-  color: #fff;
-  font-size: 13px;
-
-  z-index: 10;
+.blog-actions button:first-child:hover {
+  background: #1d4ed8;
 }
 
-/* HIDDEN SUPPORT */
+/* DELETE BLOG BUTTON */
+
+.blog-actions button:last-child {
+  background: transparent;
+  color: #6b7280;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.blog-actions button:last-child:hover {
+  color: #dc2626;
+  border-color: #dc2626;
+}
+
+/* =======================
+   POSTS (RIGHT COLUMN)
+======================= */
+
+.posts {
+  padding: 24px;
+}
+
+.posts h2 {
+  margin-bottom: 12px;
+}
+
+/* POSTS LIST */
+
+#adminPostsList {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+#adminPostsList li {
+  padding: 8px 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #ffffff;
+  font-size: 14px;
+}
+
+/* EMPTY STATE */
+
+#adminPostsList:empty::before {
+  content: "Select a blog to view or create posts";
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+/* =======================
+   GLOBAL BUTTON POLISH
+======================= */
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* =======================
+   HIDDEN SUPPORT
+======================= */
 
 [hidden] {
   display: none !important;
 }
 
-#blogNotice {
-  margin: 8px 0 12px;
-  padding: 8px 12px;
+.blog-item.active {
+  border-color: #2563eb;
+  background: #eef2ff;
+}
 
-  background: #e8f5e9;       // светло-зелёный
-  color: #1b5e20;            // тёмно-зелёный текст
-  border: 1px solid #c8e6c9;
-  border-radius: 6px;
-
-  font-size: 13px;
+.posts-subtitle {
+  color: #9ca3af;
+  margin-bottom: 12px;
 }

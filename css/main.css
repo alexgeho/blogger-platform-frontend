@@ -280,3 +280,44 @@ ul {
   border-radius: 6px;
   font-size: 13px;
 }
+
+/* POSTS */
+.posts {
+  padding: 16px;
+}
+
+.posts ul {
+  margin-top: 12px;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  min-height: calc(100vh - 64px);
+}
+
+.blogs {
+  border-right: 1px solid #e5e7eb;
+  background: #fafafa;
+}
+
+.posts {
+  padding: 24px;
+}
+
+.blog-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 8px;
+}
+
+.blog-item span {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.3;
+}

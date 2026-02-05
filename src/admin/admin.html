@@ -1,44 +1,57 @@
 <!doctype html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin panel</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin panel</title>
 </head>
 
 <body>
-    <header class="header">
-        <h1>Admin panel</h1>
-        <button id="logoutBtn">Logout</button>
-    </header>
+  <header class="header">
+    <h1>Admin panel</h1>
+    <button id="logoutBtn">Logout</button>
+  </header>
 
-    <main class="layout">
+  <main class="layout">
 
-        <section class="blogs">
-            <h2>Blogs</h2>
+    <!-- BLOGS -->
+    <section class="blogs">
+      <h2>Blogs</h2>
 
-            <button id="createBlogBtn">+ Create blog</button>
+      <button id="createBlogBtn">+ Create blog</button>
 
-            <div id="blogNotice" hidden></div>
+      <div id="blogNotice" hidden></div>
 
-            <form id="createBlogForm" class="admin-form" hidden>
-                <input name="name" placeholder="Blog name" required />
-                <input name="description" placeholder="Description" required />
-                <input name="websiteUrl" placeholder="Website URL" required />
-                <button type="submit">Create</button>
-            </form>
+      <form id="createBlogForm" class="admin-form" hidden>
+        <input name="name" placeholder="Blog name" required />
+        <input name="description" placeholder="Description" required />
+        <input name="websiteUrl" placeholder="Website URL" required />
+        <button type="submit">Create</button>
+      </form>
 
-            <ul id="adminBlogsList"></ul>
-        </section>
+      <ul id="adminBlogsList"></ul>
+    </section>
 
-        <section class="posts">
-            <h2>Posts</h2>
-            <ul id="adminPostsList"></ul>
-        </section>
-    </main>
+    <!-- POSTS -->
+    <section class="posts">
+      <h2 id="postsTitle">Posts</h2>
 
-    <script type="module" src="./admin.mjs"></script>
+      <p id="postsSubtitle" class="posts-subtitle">
+        Select a blog to view or create posts
+      </p>
+
+      <form id="createPostForm" class="admin-form" hidden>
+        <input name="title" placeholder="Post title" required />
+        <input name="shortDescription" placeholder="Short description" required />
+        <textarea name="content" placeholder="Content" required></textarea>
+        <button type="submit">Create post</button>
+      </form>
+
+      <ul id="adminPostsList"></ul>
+    </section>
+
+  </main>
+
+  <script type="module" src="./admin.mjs"></script>
 </body>
-
 </html>

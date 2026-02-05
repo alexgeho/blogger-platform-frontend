@@ -1,125 +1,159 @@
-// src/admin/admin.mjs
 import '../styles/main.scss';
 
-import {
-  createBlog,
-  getBlogs,
-  deleteBlog,
-} from './admin.blogs.api.mjs';
+import { createBlog, getBlogs, deleteBlog } from './admin.blogs.api.mjs';
+import { createPost, getPostsByBlog } from './admin.posts.api.mjs';
 
-/* =======================
-   ACCESS GUARD
-======================= */
-
+/* ACCESS GUARD */
 if (!localStorage.getItem('accessToken')) {
   window.location.href = '/';
 }
 
-/* =======================
-   DOM REFERENCES
-======================= */
-
+/* DOM */
 const blogsList = document.getElementById('adminBlogsList');
+const postsList = document.getElementById('adminPostsList');
+
 const createBlogBtn = document.getElementById('createBlogBtn');
 const createBlogForm = document.getElementById('createBlogForm');
+const createPostForm = document.getElementById('createPostForm');
+
 const logoutBtn = document.getElementById('logoutBtn');
 const blogNotice = document.getElementById('blogNotice');
 
-/* =======================
-   LOGOUT
-======================= */
+const postsTitle = document.getElementById('postsTitle');
+const postsSubtitle = document.getElementById('postsSubtitle');
 
+let currentBlogId = null;
+
+/* LOGOUT */
 logoutBtn.addEventListener('click', () => {
-  localStorage.removeItem('accessToken');
-  localStorage.removeItem('isLoggedIn');
+  localStorage.clear();
   window.location.href = '/';
 });
 
-/* =======================
-   OPEN CREATE BLOG FORM
-======================= */
-
+/* CREATE BLOG */
 createBlogBtn.addEventListener('click', () => {
   createBlogForm.hidden = false;
   createBlogForm.scrollIntoView({ behavior: 'smooth' });
 });
-
-/* =======================
-   CREATE BLOG
-======================= */
 
 createBlogForm.addEventListener('submit', async (e) => {
   e.preventDefault();
 
   const formData = new FormData(createBlogForm);
 
-  const dto = {
+  await createBlog({
     name: formData.get('name'),
     description: formData.get('description'),
     websiteUrl: formData.get('websiteUrl'),
-  };
+  });
 
-  try {
-    await createBlog(dto);
-
-    showBlogNotice('Blog created');
-
-    createBlogForm.reset();
-    createBlogForm.hidden = true;
-
-    await loadBlogs();
-  } catch (err) {
-    alert(err?.message || 'Error creating blog');
-  }
+  showBlogNotice('Blog created');
+  createBlogForm.reset();
+  createBlogForm.hidden = true;
+  loadBlogs();
 });
 
-/* =======================
-   LOAD BLOGS
-======================= */
+/* CREATE POST */
+createPostForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if (!currentBlogId) return;
 
+  const formData = new FormData(createPostForm);
+
+  await createPost(currentBlogId, {
+    title: formData.get('title'),
+    shortDescription: formData.get('shortDescription'),
+    content: formData.get('content'),
+  });
+
+  showBlogNotice('Post created');
+  createPostForm.reset();
+  loadPosts(currentBlogId);
+});
+
+/* LOAD BLOGS */
 async function loadBlogs() {
   const data = await getBlogs();
-
   blogsList.innerHTML = '';
 
   data.items.forEach((blog) => {
     const li = document.createElement('li');
     li.className = 'blog-item';
 
-    const title = document.createElement('span');
+    const title = document.createElement('div');
+    title.className = 'blog-title';
     title.textContent = blog.name;
+
+    const actions = document.createElement('div');
+    actions.className = 'blog-actions';
+
+    const createPostBtn = document.createElement('button');
+    createPostBtn.textContent = 'Create post';
+    createPostBtn.onclick = async () => {
+      selectBlog(blog, li);
+    };
 
     const deleteBtn = document.createElement('button');
     deleteBtn.textContent = 'Delete';
-
-    deleteBtn.addEventListener('click', async () => {
+    deleteBtn.onclick = async () => {
       await deleteBlog(blog.id);
       showBlogNotice('Blog deleted');
-      await loadBlogs();
-    });
+      resetPostsIfDeleted(blog.id);
+      loadBlogs();
+    };
 
-    li.append(title, deleteBtn);
+    actions.append(createPostBtn, deleteBtn);
+    li.append(title, actions);
     blogsList.appendChild(li);
   });
 }
 
-/* =======================
-   BLOG NOTICE (INLINE)
-======================= */
+/* SELECT BLOG */
+async function selectBlog(blog, li) {
+  currentBlogId = blog.id;
 
-function showBlogNotice(message) {
-  if (!blogNotice) return;
+  document
+    .querySelectorAll('.blog-item')
+    .forEach((el) => el.classList.remove('active'));
 
-  blogNotice.textContent = message;
-  blogNotice.hidden = false;
+  li.classList.add('active');
 
-  setTimeout(() => {
-    blogNotice.hidden = true;
-  }, 2000);
+  postsTitle.textContent = `Posts for: ${blog.name}`;
+  postsSubtitle.hidden = true;
+
+  createPostForm.hidden = false;
+  await loadPosts(blog.id);
 }
 
-/* =======================
-   INIT
-======================= */
+/* LOAD POSTS */
+async function loadPosts(blogId) {
+  const data = await getPostsByBlog(blogId);
+  postsList.innerHTML = '';
 
+  data.items.forEach((post) => {
+    const li = document.createElement('li');
+    li.textContent = post.title;
+    postsList.appendChild(li);
+  });
+}
+
+/* RESET POSTS */
+function resetPostsIfDeleted(blogId) {
+  if (currentBlogId === blogId) {
+    currentBlogId = null;
+    postsList.innerHTML = '';
+    createPostForm.hidden = true;
+    postsTitle.textContent = 'Posts';
+    postsSubtitle.hidden = false;
+  }
+}
+
+/* NOTICE */
+function showBlogNotice(message) {
+  blogNotice.textContent = message;
+  blogNotice.hidden = false;
+  setTimeout(() => (blogNotice.hidden = true), 2000);
+}
+
+/* INIT */
 loadBlogs();
