@@ -1,0 +1,99 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #f6f7f9;
+  color: #222;
+  font-size: 1rem;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  min-height: calc(100vh - 96px - 40px);
+}
+
+.blogs,
+.posts {
+  background: #fff;
+  padding: 16px;
+}
+
+.header {
+  height: 96px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #000;
+  color: #fff;
+  position: relative;
+  z-index: 10;
+}
+.header h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.auth {
+  position: relative;
+}
+.auth-actions {
+  display: flex;
+  gap: 8px;
+}
+.auth-actions button {
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+}
+.auth-form {
+  position: absolute;
+  top: 56px;
+  right: 0;
+  margin-right: -25px;
+  width: 80vw;
+  max-width: 420px;
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+  background: #111;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.auth-form.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.auth-form input,
+.auth-form button {
+  padding: 8px;
+  font-size: 1rem;
+  border-radius: 6px;
+}
+
+.admin-form {
+  margin: 12px 0;
+  display: grid;
+  gap: 8px;
+}
+.admin-form input,
+.admin-form button {
+  padding: 8px;
+  font-size: 14px;
+}

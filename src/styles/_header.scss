@@ -1,0 +1,12 @@
+// src/styles/_header.scss
+.header {
+  height: 96px;
+  padding: 0 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: #000;
+  color: #fff;
+}

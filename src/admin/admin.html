@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin panel</title>
+    <link rel="stylesheet" href="../style.css" />
+</head>
+
+<body>
+    <header class="header">
+        <h1>Admin panel</h1>
+        <button id="logoutBtn">Logout</button>
+    </header>
+
+    <main class="layout">
+
+        <section class="blogs">
+            <h2>Blogs</h2>
+            <button id="createBlogBtn">+ Create blog</button>
+
+            <!-- CREATE BLOG FORM -->
+            <form id="createBlogForm" class="admin-form" hidden>
+                <input name="name" placeholder="Blog name" required />
+                <input name="description" placeholder="Description" required />
+                <input name="websiteUrl" placeholder="Website URL" required />
+                <button type="submit">Create</button>
+            </form>
+
+            <ul id="adminBlogsList"></ul>
+        </section>
+
+        <section class="posts">
+            <h2>Posts</h2>
+            <ul id="adminPostsList"></ul>
+        </section>
+    </main>
+
+    <script type="module" src="./admin.mjs"></script>
+</body>
+
+</html>

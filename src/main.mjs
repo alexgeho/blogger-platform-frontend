@@ -1,5 +1,8 @@
 // src/main.mjs
 
+import './styles/main.scss';
+
+
 /* =======================
    UI / AUTH SIDE EFFECTS
    These files attach event listeners

@@ -1,0 +1,52 @@
+.auth {
+  position: relative;
+
+  &-actions {
+    display: flex;
+    gap: 8px;
+
+    button {
+      padding: 6px 12px;
+      font-size: 14px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      background: #fff;
+      cursor: pointer;
+    }
+  }
+
+  &-form {
+    position: absolute;
+    top: 56px;
+    right: 0;
+    margin-right: -25px;
+
+    width: calc(80vw);
+    max-width: 420px;
+
+    display: grid;
+    gap: 8px;
+
+    padding: 12px;
+    background: #111;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+
+    opacity: 0;
+    pointer-events: none;
+
+    transition: opacity 0.25s ease, transform 0.25s ease;
+
+    &.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    input,
+    button {
+      padding: 8px;
+      font-size: 1rem;
+      border-radius: 6px;
+    }
+  }
+}

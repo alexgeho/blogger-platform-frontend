@@ -1,0 +1,11 @@
+.admin-form {
+  margin: 12px 0;
+  display: grid;
+  gap: 8px;
+
+  input,
+  button {
+    padding: 8px;
+    font-size: 14px;
+  }
+}

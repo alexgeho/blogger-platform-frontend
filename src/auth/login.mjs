@@ -1,5 +1,3 @@
-// src/auth/login.mjs
-
 const loginForm = document.getElementById('loginForm');
 
 loginForm.addEventListener('submit', async (e) => {
@@ -11,7 +9,7 @@ loginForm.addEventListener('submit', async (e) => {
   try {
     const res = await fetch('http://localhost:5077/auth/login', {
       method: 'POST',
-      credentials: 'include', // 👈 чтобы refreshToken cookie сохранился
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -24,10 +22,12 @@ loginForm.addEventListener('submit', async (e) => {
 
     const data = await res.json();
 
-    // accessToken кладём в localStorage
+    // 1️⃣ Save token
     localStorage.setItem('accessToken', data.accessToken);
 
-    alert('Logged in');
+    // 2️⃣ Redirect immediately
+    window.location.href = '/src/admin/admin.html';
+
   } catch (err) {
     alert(err.message);
   }

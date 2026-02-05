@@ -23,3 +23,17 @@ document.addEventListener('DOMContentLoaded', () => {
     loginForm.classList.remove('open');
   };
 });
+
+
+// src/auth/ui.mjs
+
+const adminLink = document.getElementById('adminLink');
+
+if (adminLink) {
+  if (localStorage.getItem('accessToken')) {
+    adminLink.classList.remove('hidden');
+  } else {
+    adminLink.classList.add('hidden');
+  }
+}
+
