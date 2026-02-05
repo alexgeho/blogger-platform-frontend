@@ -189,111 +189,94 @@ ul {
 }
 
 /* =======================
-   ADMIN – BLOGS SECTION
+   ADMIN PANEL
 ======================= */
+/* BLOGS SECTION */
 .blogs {
-  padding: 16px;
   position: relative;
-}
-.blogs h2 {
-  margin-bottom: 12px;
-  font-size: 1.2rem;
+  padding: 16px;
 }
 
+/* CREATE BLOG BUTTON */
+#createBlogBtn {
+  margin-bottom: 12px;
+}
+
+/* CREATE BLOG FORM */
+.admin-form {
+  margin-bottom: 16px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #fafafa;
+}
+
+.admin-form input {
+  padding: 6px 8px;
+  font-size: 14px;
+}
+
+.admin-form button {
+  align-self: flex-start;
+}
+
+/* BLOG LIST */
+#adminBlogsList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* SINGLE BLOG ITEM */
+.blog-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.blog-item span {
+  font-weight: 500;
+  margin-right: auto;
+}
+
+/* BLOG ACTION BUTTONS */
+.blog-item button {
+  font-size: 12px;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+/* TOAST (LOCAL, INSIDE BLOGS) */
 #toast {
   position: absolute;
   top: 12px;
   right: 12px;
-  padding: 10px 14px;
+  padding: 8px 12px;
   border-radius: 6px;
   background: #111;
   color: #fff;
-  font-size: 14px;
+  font-size: 13px;
   z-index: 10;
 }
 
-/* =======================
-   CREATE BLOG BUTTON
-======================= */
-#createBlogBtn {
-  margin-bottom: 12px;
-  padding: 6px 12px;
-  font-size: 14px;
+/* HIDDEN SUPPORT */
+[hidden] {
+  display: none !important;
+}
+
+#blogNotice {
+  margin: 8px 0 12px;
+  padding: 8px 12px;
+  background: #e8f5e9;
+  color: #1b5e20;
+  border: 1px solid #c8e6c9;
   border-radius: 6px;
-  border: 1px solid #ccc;
-  background: #111;
-  color: #fff;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-#createBlogBtn:hover {
-  background: #000;
-}
-
-/* =======================
-   CREATE BLOG FORM
-======================= */
-.admin-form {
-  margin-bottom: 16px;
-  padding: 12px;
-  display: grid;
-  gap: 8px;
-  background: #f9fafb;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-}
-.admin-form input {
-  padding: 8px;
-  font-size: 0.9rem;
-  border-radius: 6px;
-  border: 1px solid #d1d5db;
-}
-.admin-form button {
-  align-self: flex-start;
-  padding: 6px 14px;
-  font-size: 14px;
-  border-radius: 6px;
-  border: none;
-  background: #111;
-  color: #fff;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-.admin-form button:hover {
-  background: #000;
-}
-
-/* =======================
-   BLOG LIST (ADMIN)
-======================= */
-#adminBlogsList {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-#adminBlogsList li {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 8px 10px;
-  font-size: 0.95rem;
-  background: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 6px;
-}
-
-/* delete button inside blog item */
-#adminBlogsList button {
-  padding: 4px 8px;
-  font-size: 12px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  background: #fff;
-  cursor: pointer;
-}
-
-#adminBlogsList button:hover {
-  background: #f3f4f6;
+  font-size: 13px;
 }

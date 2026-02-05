@@ -23,6 +23,7 @@ const blogsList = document.getElementById('adminBlogsList');
 const createBlogBtn = document.getElementById('createBlogBtn');
 const createBlogForm = document.getElementById('createBlogForm');
 const logoutBtn = document.getElementById('logoutBtn');
+const blogNotice = document.getElementById('blogNotice');
 
 /* =======================
    LOGOUT
@@ -35,11 +36,12 @@ logoutBtn.addEventListener('click', () => {
 });
 
 /* =======================
-   TOGGLE CREATE BLOG FORM
+   OPEN CREATE BLOG FORM
 ======================= */
 
 createBlogBtn.addEventListener('click', () => {
-  createBlogForm.hidden = !createBlogForm.hidden;
+  createBlogForm.hidden = false;
+  createBlogForm.scrollIntoView({ behavior: 'smooth' });
 });
 
 /* =======================
@@ -59,7 +61,9 @@ createBlogForm.addEventListener('submit', async (e) => {
 
   try {
     await createBlog(dto);
-    showToast('Blog created');
+
+    showBlogNotice('Blog created');
+
     createBlogForm.reset();
     createBlogForm.hidden = true;
 
@@ -80,33 +84,42 @@ async function loadBlogs() {
 
   data.items.forEach((blog) => {
     const li = document.createElement('li');
-    li.textContent = blog.name;
+    li.className = 'blog-item';
+
+    const title = document.createElement('span');
+    title.textContent = blog.name;
 
     const deleteBtn = document.createElement('button');
     deleteBtn.textContent = 'Delete';
 
     deleteBtn.addEventListener('click', async () => {
       await deleteBlog(blog.id);
+      showBlogNotice('Blog deleted');
       await loadBlogs();
     });
 
-    li.appendChild(deleteBtn);
+    li.append(title, deleteBtn);
     blogsList.appendChild(li);
   });
 }
 
 /* =======================
-   INIT
+   BLOG NOTICE (INLINE)
 ======================= */
 
-function showToast(message) {
-  const toast = document.getElementById('toast');
-  toast.textContent = message;
-  toast.hidden = false;
+function showBlogNotice(message) {
+  if (!blogNotice) return;
+
+  blogNotice.textContent = message;
+  blogNotice.hidden = false;
 
   setTimeout(() => {
-    toast.hidden = true;
+    blogNotice.hidden = true;
   }, 2000);
 }
+
+/* =======================
+   INIT
+======================= */
 
 loadBlogs();
