@@ -4,11 +4,27 @@
 
 .blogs {
   padding: 16px;
+  position: relative;
 
   h2 {
     margin-bottom: 12px;
     font-size: 1.2rem;
   }
+}
+
+#toast {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+
+  padding: 10px 14px;
+  border-radius: 6px;
+
+  background: #111;
+  color: #fff;
+  font-size: 14px;
+
+  z-index: 10;
 }
 
 /* =======================

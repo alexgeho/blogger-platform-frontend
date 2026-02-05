@@ -1,12 +1,5 @@
 // src/admin/admin.mjs
-
 import '../styles/main.scss';
-
-
-// ====== ACCESS GUARD ======
-if (!localStorage.getItem('accessToken')) {
-  window.location.href = '/';
-}
 
 import {
   createBlog,
@@ -14,14 +7,26 @@ import {
   deleteBlog,
 } from './admin.blogs.api.mjs';
 
-// ====== DOM REFERENCES ======
+/* =======================
+   ACCESS GUARD
+======================= */
+
+if (!localStorage.getItem('accessToken')) {
+  window.location.href = '/';
+}
+
+/* =======================
+   DOM REFERENCES
+======================= */
 
 const blogsList = document.getElementById('adminBlogsList');
-const createBtn = document.getElementById('createBlogBtn');
-const createForm = document.getElementById('createBlogForm');
+const createBlogBtn = document.getElementById('createBlogBtn');
+const createBlogForm = document.getElementById('createBlogForm');
 const logoutBtn = document.getElementById('logoutBtn');
 
-// ====== LOGOUT ======
+/* =======================
+   LOGOUT
+======================= */
 
 logoutBtn.addEventListener('click', () => {
   localStorage.removeItem('accessToken');
@@ -29,18 +34,22 @@ logoutBtn.addEventListener('click', () => {
   window.location.href = '/';
 });
 
-// ====== TOGGLE CREATE FORM ======
+/* =======================
+   TOGGLE CREATE BLOG FORM
+======================= */
 
-createBtn.addEventListener('click', () => {
-  createForm.hidden = !createForm.hidden;
+createBlogBtn.addEventListener('click', () => {
+  createBlogForm.hidden = !createBlogForm.hidden;
 });
 
-// ====== CREATE BLOG (FORM SUBMIT) ======
+/* =======================
+   CREATE BLOG
+======================= */
 
-createForm.addEventListener('submit', async (e) => {
+createBlogForm.addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  const formData = new FormData(createForm);
+  const formData = new FormData(createBlogForm);
 
   const dto = {
     name: formData.get('name'),
@@ -50,17 +59,19 @@ createForm.addEventListener('submit', async (e) => {
 
   try {
     await createBlog(dto);
-
-    createForm.reset();
-    createForm.hidden = true;
+    showToast('Blog created');
+    createBlogForm.reset();
+    createBlogForm.hidden = true;
 
     await loadBlogs();
   } catch (err) {
-    alert(err.message || 'Error creating blog');
+    alert(err?.message || 'Error creating blog');
   }
 });
 
-// ====== LOAD BLOGS ======
+/* =======================
+   LOAD BLOGS
+======================= */
 
 async function loadBlogs() {
   const data = await getBlogs();
@@ -71,19 +82,31 @@ async function loadBlogs() {
     const li = document.createElement('li');
     li.textContent = blog.name;
 
-    const delBtn = document.createElement('button');
-    delBtn.textContent = 'Delete';
+    const deleteBtn = document.createElement('button');
+    deleteBtn.textContent = 'Delete';
 
-    delBtn.addEventListener('click', async () => {
+    deleteBtn.addEventListener('click', async () => {
       await deleteBlog(blog.id);
-      loadBlogs();
+      await loadBlogs();
     });
 
-    li.appendChild(delBtn);
+    li.appendChild(deleteBtn);
     blogsList.appendChild(li);
   });
 }
 
-// ====== INIT ======
+/* =======================
+   INIT
+======================= */
+
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  toast.textContent = message;
+  toast.hidden = false;
+
+  setTimeout(() => {
+    toast.hidden = true;
+  }, 2000);
+}
 
 loadBlogs();

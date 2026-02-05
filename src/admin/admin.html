@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 
@@ -20,6 +19,7 @@
             <h2>Blogs</h2>
             <button id="createBlogBtn">+ Create blog</button>
 
+
             <!-- CREATE BLOG FORM -->
             <form id="createBlogForm" class="admin-form" hidden>
                 <input name="name" placeholder="Blog name" required />
@@ -27,6 +27,8 @@
                 <input name="websiteUrl" placeholder="Website URL" required />
                 <button type="submit">Create</button>
             </form>
+
+            <div id="toast" hidden></div>
 
             <ul id="adminBlogsList"></ul>
         </section>
