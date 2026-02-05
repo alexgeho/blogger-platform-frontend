@@ -1,11 +1,11 @@
 const API_URL = 'http://localhost:5077';
 
+/* CREATE POST (через блог — уже есть) */
 export async function createPost(blogId, dto) {
   const response = await fetch(`${API_URL}/blogs/${blogId}/posts`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Basic ${btoa('admin:qwerty')}`,
     },
     body: JSON.stringify(dto),
   });
@@ -17,6 +17,7 @@ export async function createPost(blogId, dto) {
   return response.json();
 }
 
+/* GET POSTS BY BLOG */
 export async function getPostsByBlog(blogId) {
   const response = await fetch(`${API_URL}/blogs/${blogId}/posts`);
 
@@ -25,4 +26,30 @@ export async function getPostsByBlog(blogId) {
   }
 
   return response.json();
+}
+
+/* UPDATE POST */
+export async function updatePost(postId, dto) {
+  const response = await fetch(`${API_URL}/posts/${postId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(dto),
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to update post');
+  }
+}
+
+/* DELETE POST */
+export async function deletePost(postId) {
+  const response = await fetch(`${API_URL}/posts/${postId}`, {
+    method: 'DELETE',
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to delete post');
+  }
 }

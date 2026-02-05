@@ -33,12 +33,10 @@
 #blogNotice {
   margin-bottom: 12px;
   padding: 8px 12px;
-
   background: #e8f5e9;
   color: #1b5e20;
   border: 1px solid #c8e6c9;
   border-radius: 8px;
-
   font-size: 13px;
 }
 
@@ -49,10 +47,9 @@
 .admin-form {
   background: #ffffff;
   border: 1px solid #e5e7eb;
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 16px;
   margin-bottom: 16px;
-
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -93,16 +90,15 @@
 #adminBlogsList {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
-/* SINGLE BLOG ITEM (CARD) */
+/* BLOG CARD */
 
 .blog-item {
   display: flex;
   flex-direction: column;
   gap: 8px;
-
   padding: 12px;
   background: #ffffff;
   border: 1px solid #e5e7eb;
@@ -114,13 +110,17 @@
   border-color: #d1d5db;
 }
 
+.blog-item.active {
+  border-color: #2563eb;
+  background: #eef2ff;
+}
+
 /* BLOG TITLE */
 
 .blog-title {
   font-weight: 600;
   font-size: 14px;
   line-height: 1.4;
-
   word-break: break-word;
 }
 
@@ -131,9 +131,9 @@
   gap: 8px;
 }
 
-/* CREATE POST BUTTON */
+/* BLOG: POSTS BUTTON */
 
-.blog-actions button:first-child {
+.blog-actions .btn-posts {
   background: #2563eb;
   color: #ffffff;
   border: none;
@@ -143,23 +143,23 @@
   cursor: pointer;
 }
 
-.blog-actions button:first-child:hover {
+.blog-actions .btn-posts:hover {
   background: #1d4ed8;
 }
 
-/* DELETE BLOG BUTTON */
+/* BLOG: DELETE */
 
-.blog-actions button:last-child {
+.blog-actions .btn-delete {
   background: transparent;
   color: #6b7280;
   border: 1px solid #e5e7eb;
   border-radius: 6px;
-  padding: 4px 8px;
+  padding: 4px 10px;
   font-size: 12px;
   cursor: pointer;
 }
 
-.blog-actions button:last-child:hover {
+.blog-actions .btn-delete:hover {
   color: #dc2626;
   border-color: #dc2626;
 }
@@ -173,36 +173,109 @@
 }
 
 .posts h2 {
+  margin-bottom: 4px;
+}
+
+.posts-subtitle {
+  color: #9ca3af;
   margin-bottom: 12px;
 }
 
-/* POSTS LIST */
+/* =======================
+   POSTS LIST
+======================= */
 
 #adminPostsList {
   margin-top: 16px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 }
 
-#adminPostsList li {
-  padding: 8px 10px;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
+/* POST CARD */
+
+.post-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
   background: #ffffff;
-  font-size: 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
 }
 
-/* EMPTY STATE */
+.post-item:hover {
+  background: #fafafa;
+  border-color: #d1d5db;
+}
 
-#adminPostsList:empty::before {
-  content: "Select a blog to view or create posts";
-  color: #9ca3af;
+/* POST TITLE */
+
+.post-title {
+  flex: 1;
+  font-weight: 500;
   font-size: 14px;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+/* POST ACTIONS */
+
+.post-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* POST: EDIT */
+
+.post-actions .btn-edit {
+  background: #f3f4f6;
+  color: #374151;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.post-actions .btn-edit:hover {
+  background: #e5e7eb;
+}
+
+/* POST: DELETE */
+
+.post-actions .btn-delete {
+  background: transparent;
+  color: #6b7280;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.post-actions .btn-delete:hover {
+  color: #dc2626;
+  border-color: #dc2626;
 }
 
 /* =======================
-   GLOBAL BUTTON POLISH
+   EMPTY STATE
+======================= */
+
+#adminPostsList:empty::before {
+  content: "No posts yet";
+  display: block;
+  padding: 16px;
+  color: #9ca3af;
+  font-size: 14px;
+  background: #ffffff;
+  border: 1px dashed #e5e7eb;
+  border-radius: 12px;
+}
+
+/* =======================
+   GLOBAL
 ======================= */
 
 button {
@@ -214,20 +287,6 @@ button:disabled {
   cursor: default;
 }
 
-/* =======================
-   HIDDEN SUPPORT
-======================= */
-
 [hidden] {
   display: none !important;
-}
-
-.blog-item.active {
-  border-color: #2563eb;
-  background: #eef2ff;
-}
-
-.posts-subtitle {
-  color: #9ca3af;
-  margin-bottom: 12px;
 }
