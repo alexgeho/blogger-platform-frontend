@@ -1,11 +1,119 @@
+/* =======================
+   ADMIN – BLOGS SECTION
+======================= */
+
+.blogs {
+  padding: 16px;
+
+  h2 {
+    margin-bottom: 12px;
+    font-size: 1.2rem;
+  }
+}
+
+/* =======================
+   CREATE BLOG BUTTON
+======================= */
+
+#createBlogBtn {
+  margin-bottom: 12px;
+
+  padding: 6px 12px;
+  font-size: 14px;
+
+  border-radius: 6px;
+  border: 1px solid #ccc;
+
+  background: #111;
+  color: #fff;
+
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+#createBlogBtn:hover {
+  background: #000;
+}
+
+/* =======================
+   CREATE BLOG FORM
+======================= */
+
 .admin-form {
-  margin: 12px 0;
+  margin-bottom: 16px;
+  padding: 12px;
+
   display: grid;
   gap: 8px;
 
-  input,
-  button {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+
+  input {
     padding: 8px;
-    font-size: 14px;
+    font-size: 0.9rem;
+
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
   }
+
+  button {
+    align-self: flex-start;
+
+    padding: 6px 14px;
+    font-size: 14px;
+
+    border-radius: 6px;
+    border: none;
+
+    background: #111;
+    color: #fff;
+
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+
+  button:hover {
+    background: #000;
+  }
+}
+
+/* =======================
+   BLOG LIST (ADMIN)
+======================= */
+
+#adminBlogsList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+#adminBlogsList li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 8px 10px;
+  font-size: 0.95rem;
+
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+}
+
+/* delete button inside blog item */
+#adminBlogsList button {
+  padding: 4px 8px;
+  font-size: 12px;
+
+  border-radius: 6px;
+  border: 1px solid #ccc;
+
+  background: #fff;
+  cursor: pointer;
+}
+
+#adminBlogsList button:hover {
+  background: #f3f4f6;
 }

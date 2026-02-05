@@ -1,3 +1,4 @@
+@charset "UTF-8";
 * {
   box-sizing: border-box;
 }
@@ -22,12 +23,90 @@ ul {
   min-height: calc(100vh - 96px - 40px);
 }
 
-.blogs,
-.posts {
+.blogs {
   background: #fff;
+  border-bottom: 1px solid #ddd;
   padding: 16px;
 }
 
+/* POST LIST → CARDS */
+.posts {
+  padding: 24px;
+}
+
+.posts h2 {
+  font-size: 1.5rem;
+  font-weight: 300;
+  margin-bottom: 16px;
+}
+
+#postsList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+#postsList li {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  min-height: 140px;
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  line-height: 1.4;
+  border: 1px solid #e5e7eb;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+#postsList li:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+  border-color: #c7c7c7;
+}
+
+#postsList li::before {
+  content: "";
+  width: 1px;
+  height: 100%;
+  background: #9f9f9f;
+  border-radius: 4px;
+  margin-right: 16px;
+}
+
+/* BLOG LIST → CARDS */
+#blogsList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#blogsList li {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+#blogsList li:hover {
+  background: #f9fafb;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+@media (min-width: 768px) {
+  .layout {
+    grid-template-columns: 260px 1fr;
+  }
+  .blogs {
+    border-bottom: none;
+    border-right: 1px solid #ddd;
+  }
+}
 .header {
   height: 96px;
   padding: 0 16px;
@@ -36,12 +115,34 @@ ul {
   justify-content: space-between;
   background: #000;
   color: #fff;
-  position: relative;
-  z-index: 10;
 }
-.header h1 {
-  margin: 0;
-  font-size: 24px;
+
+.auth-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.admin-link {
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  text-decoration: none;
+  background: #fff;
+  color: #000;
+  border: 1px solid #ccc;
+  transition: background 0.2s ease, opacity 0.2s ease;
+}
+
+.admin-link:hover {
+  background: #eee;
+}
+
+/* 🔒 DISABLED STATE */
+.admin-link.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+  cursor: not-allowed;
 }
 
 .auth {
@@ -87,13 +188,99 @@ ul {
   border-radius: 6px;
 }
 
+/* =======================
+   ADMIN – BLOGS SECTION
+======================= */
+.blogs {
+  padding: 16px;
+}
+.blogs h2 {
+  margin-bottom: 12px;
+  font-size: 1.2rem;
+}
+
+/* =======================
+   CREATE BLOG BUTTON
+======================= */
+#createBlogBtn {
+  margin-bottom: 12px;
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: #111;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+#createBlogBtn:hover {
+  background: #000;
+}
+
+/* =======================
+   CREATE BLOG FORM
+======================= */
 .admin-form {
-  margin: 12px 0;
+  margin-bottom: 16px;
+  padding: 12px;
   display: grid;
   gap: 8px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
 }
-.admin-form input,
-.admin-form button {
+.admin-form input {
   padding: 8px;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+}
+.admin-form button {
+  align-self: flex-start;
+  padding: 6px 14px;
   font-size: 14px;
+  border-radius: 6px;
+  border: none;
+  background: #111;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.admin-form button:hover {
+  background: #000;
+}
+
+/* =======================
+   BLOG LIST (ADMIN)
+======================= */
+#adminBlogsList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+#adminBlogsList li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  font-size: 0.95rem;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+}
+
+/* delete button inside blog item */
+#adminBlogsList button {
+  padding: 4px 8px;
+  font-size: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+}
+
+#adminBlogsList button:hover {
+  background: #f3f4f6;
 }
