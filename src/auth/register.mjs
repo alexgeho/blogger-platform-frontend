@@ -1,35 +1,29 @@
 // src/auth/register.mjs
 
-const form = document.getElementById('registerForm');
+const registerForm = document.getElementById('registerForm');
 
-if (form) {
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
+registerForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
 
-    const dto = {
-      login: form.login.value,
-      email: form.email.value,
-      password: form.password.value,
-    };
+  const login = registerForm.login.value;
+  const email = registerForm.email.value;
+  const password = registerForm.password.value;
 
-    try {
-      const res = await fetch('http://localhost:5077/auth/registration', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(dto),
-      });
+  try {
+    const res = await fetch('http://localhost:5077/auth/registration', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ login, email, password }),
+    });
 
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        alert(err.message || 'Registration failed');
-        return;
-      }
-
-      alert('Registration OK. Check email.');
-    } catch (e) {
-      alert('Network error');
+    if (!res.ok) {
+      throw new Error('Registration failed');
     }
-  });
-}
+
+    alert('Registered');
+  } catch (err) {
+    alert(err.message);
+  }
+});

@@ -1,19 +1,31 @@
 // src/main.mjs
 
-// UI / auth side effects
+/* =======================
+   UI / AUTH SIDE EFFECTS
+   These files attach event listeners
+   to login/register forms and buttons
+======================= */
+
 import './auth/ui.mjs';
+import './auth/login.mjs';
 import './auth/register.mjs';
 
-// API
-import { blogsApi } from './api/blogs.api';
-import { postsApi } from './api/posts.api';
+/* =======================
+   API FUNCTIONS (DIRECT FETCH)
+======================= */
+
+import { getBlogs } from './blogs/blogs.api.mjs';
+import {
+  getAllPosts,
+  getPostsByBlogId,
+} from './posts/posts.api.mjs';
 
 /* =======================
    GLOBAL STATE
 ======================= */
 
 const state = {
-  activeBlogId: null, // null = all posts
+  activeBlogId: null, // null means "all posts"
 };
 
 /* =======================
@@ -30,12 +42,15 @@ const postsList = document.getElementById('postsList');
    BLOGS
 ======================= */
 
+/**
+ * Loads blogs list and renders sidebar
+ */
 async function loadBlogs() {
-  const blogs = await blogsApi.getAll();
+  const blogs = await getBlogs();
 
   blogsList.innerHTML = '';
 
-  // All posts
+  // "All posts" item
   const allItem = document.createElement('li');
   allItem.textContent = 'All posts';
   allItem.style.cursor = 'pointer';
@@ -47,7 +62,8 @@ async function loadBlogs() {
 
   blogsList.appendChild(allItem);
 
-  blogs.items.forEach(blog => {
+  // Render blogs
+  blogs.items.forEach((blog) => {
     const li = document.createElement('li');
     li.textContent = blog.name;
     li.style.cursor = 'pointer';
@@ -67,14 +83,17 @@ async function loadBlogs() {
    POSTS
 ======================= */
 
+/**
+ * Loads posts depending on selected blog
+ */
 async function loadPosts() {
   const posts = state.activeBlogId
-    ? await postsApi.getByBlogId(state.activeBlogId)
-    : await postsApi.getAll();
+    ? await getPostsByBlogId(state.activeBlogId)
+    : await getAllPosts();
 
   postsList.innerHTML = '';
 
-  posts.items.forEach(post => {
+  posts.items.forEach((post) => {
     if (!post.title) return;
 
     const li = document.createElement('li');
@@ -89,5 +108,6 @@ async function loadPosts() {
    INIT
 ======================= */
 
+// Initial data load
 await loadBlogs();
 await loadPosts();
