@@ -12,6 +12,8 @@
   padding: 16px;
 }
 
+/* POST LIST → CARDS */
+
 .posts {
   padding: 24px;
 }
@@ -67,6 +69,35 @@
   margin-right: 16px;
 }
 
+/* BLOG LIST → CARDS */
+
+#blogsList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#blogsList li {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+
+  padding: 12px 14px;
+  font-size: 0.95rem;
+
+  cursor: pointer;
+
+  transition: 
+    background-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+#blogsList li:hover {
+  background: #f9fafb;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
 
 
 @media (min-width: 768px) {

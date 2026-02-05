@@ -2,11 +2,8 @@
 
 import './styles/main.scss';
 
-
 /* =======================
    UI / AUTH SIDE EFFECTS
-   These files attach event listeners
-   to login/register forms and buttons
 ======================= */
 
 import './auth/ui.mjs';
@@ -14,21 +11,18 @@ import './auth/login.mjs';
 import './auth/register.mjs';
 
 /* =======================
-   API FUNCTIONS (DIRECT FETCH)
+   API FUNCTIONS
 ======================= */
 
 import { getBlogs } from './blogs/blogs.api.mjs';
-import {
-  getAllPosts,
-  getPostsByBlogId,
-} from './posts/posts.api.mjs';
+import { getAllPosts, getPostsByBlogId } from './posts/posts.api.mjs';
 
 /* =======================
    GLOBAL STATE
 ======================= */
 
 const state = {
-  activeBlogId: null, // null means "all posts"
+  activeBlogId: null,
 };
 
 /* =======================
@@ -41,19 +35,35 @@ const blogsList = document.getElementById('blogsList');
 const postsSection = document.getElementById('posts');
 const postsList = document.getElementById('postsList');
 
+const adminLink = document.getElementById('adminLink');
+
+/* =======================
+   ADMIN LINK STATE
+======================= */
+
+function updateAdminLink() {
+  if (!adminLink) return;
+
+  const isLoggedIn = !!localStorage.getItem('accessToken');
+
+  if (!isLoggedIn) {
+    adminLink.classList.add('disabled');
+    adminLink.removeAttribute('href');
+  } else {
+    adminLink.classList.remove('disabled');
+    adminLink.setAttribute('href', '/src/admin/admin.html');
+  }
+}
+
 /* =======================
    BLOGS
 ======================= */
 
-/**
- * Loads blogs list and renders sidebar
- */
 async function loadBlogs() {
   const blogs = await getBlogs();
 
   blogsList.innerHTML = '';
 
-  // "All posts" item
   const allItem = document.createElement('li');
   allItem.textContent = 'All posts';
   allItem.style.cursor = 'pointer';
@@ -65,7 +75,6 @@ async function loadBlogs() {
 
   blogsList.appendChild(allItem);
 
-  // Render blogs
   blogs.items.forEach((blog) => {
     const li = document.createElement('li');
     li.textContent = blog.name;
@@ -86,9 +95,6 @@ async function loadBlogs() {
    POSTS
 ======================= */
 
-/**
- * Loads posts depending on selected blog
- */
 async function loadPosts() {
   const posts = state.activeBlogId
     ? await getPostsByBlogId(state.activeBlogId)
@@ -111,6 +117,6 @@ async function loadPosts() {
    INIT
 ======================= */
 
-// Initial data load
 await loadBlogs();
 await loadPosts();
+updateAdminLink();

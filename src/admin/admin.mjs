@@ -1,30 +1,45 @@
-// ====== ACCESS GUARD ======
+// src/admin/admin.mjs
+
+/* =======================
+   ACCESS GUARD
+======================= */
 // If user is not logged in — kick out from admin page
 if (!localStorage.getItem('accessToken')) {
   window.location.href = '/';
 }
 
-// src/admin/admin.mjs
+/* =======================
+   API
+======================= */
 
-import { createBlog, getBlogs, deleteBlog } from './admin.blogs.api.mjs';
+import {
+  createBlog,
+  getBlogs,
+  deleteBlog,
+} from './admin.blogs.api.mjs';
 
-
-
-// ====== DOM REFERENCES ======
+/* =======================
+   DOM REFERENCES
+======================= */
 
 const blogsList = document.getElementById('adminBlogsList');
 const createBtn = document.getElementById('createBlogBtn');
 const logoutBtn = document.getElementById('logoutBtn');
 
-// ====== LOGOUT ======
+/* =======================
+   LOGOUT
+======================= */
 
 logoutBtn.addEventListener('click', () => {
   localStorage.removeItem('accessToken');
   localStorage.removeItem('isLoggedIn');
+
   window.location.href = '/';
 });
 
-// ====== CREATE BLOG ======
+/* =======================
+   CREATE BLOG
+======================= */
 
 createBtn.addEventListener('click', async () => {
   try {
@@ -34,13 +49,15 @@ createBtn.addEventListener('click', async () => {
       websiteUrl: 'https://example.com',
     });
 
-    loadBlogs();
+    await loadBlogs();
   } catch (err) {
     alert(err.message);
   }
 });
 
-// ====== LOAD BLOGS ======
+/* =======================
+   LOAD BLOGS
+======================= */
 
 async function loadBlogs() {
   const data = await getBlogs();
@@ -51,19 +68,23 @@ async function loadBlogs() {
     const li = document.createElement('li');
     li.textContent = blog.name;
 
-    const delBtn = document.createElement('button');
-    delBtn.textContent = 'Delete';
+    const deleteBtn = document.createElement('button');
+    deleteBtn.textContent = 'Delete';
 
-    delBtn.addEventListener('click', async () => {
+    deleteBtn.addEventListener('click', async () => {
+      if (!confirm('Delete this blog?')) return;
+
       await deleteBlog(blog.id);
       loadBlogs();
     });
 
-    li.appendChild(delBtn);
+    li.appendChild(deleteBtn);
     blogsList.appendChild(li);
   });
 }
 
-// ====== INIT ======
+/* =======================
+   INIT
+======================= */
 
 loadBlogs();
