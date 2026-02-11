@@ -31,7 +31,14 @@ const blogNotice = document.getElementById('blogNotice');
 const postsTitle = document.getElementById('postsTitle');
 const postsSubtitle = document.getElementById('postsSubtitle');
 
+const createPostSubmitBtn = document.getElementById('createPostSubmitBtn');
+const cancelEditPostBtn = document.getElementById('cancelEditPostBtn');
+
+/** Текущий выбранный блог (для загрузки постов). */
 let currentBlogId = null;
+
+/** ID поста в режиме редактирования; null — форма в режиме создания. */
+let editingPostId = null;
 
 /* =======================
    LOGOUT
@@ -66,23 +73,46 @@ createBlogForm.addEventListener('submit', async (e) => {
 });
 
 /* =======================
-   CREATE POST
+   CREATE / EDIT POST (одна форма выше списка)
 ======================= */
+
+/** Сбрасывает режим редактирования: форма снова для создания поста. */
+function clearEditPostMode() {
+  editingPostId = null;
+  createPostForm.reset();
+  createPostSubmitBtn.textContent = 'Create post';
+  cancelEditPostBtn.hidden = true;
+}
+
 createPostForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   if (!currentBlogId) return;
 
   const formData = new FormData(createPostForm);
-
-  await createPost(currentBlogId, {
+  const dto = {
     title: formData.get('title'),
     shortDescription: formData.get('shortDescription'),
     content: formData.get('content'),
-  });
+  };
 
-  showNotice('Post created');
-  createPostForm.reset();
-  loadPosts(currentBlogId);
+  if (editingPostId) {
+    // Режим редактирования: бэкенд требует blogId в теле запроса
+    await updatePost(editingPostId, { ...dto, blogId: currentBlogId });
+    showNotice('Post updated');
+    clearEditPostMode();
+    await loadPosts(currentBlogId);
+  } else {
+    // Режим создания
+    await createPost(currentBlogId, dto);
+    showNotice('Post created');
+    createPostForm.reset();
+    await loadPosts(currentBlogId);
+  }
+});
+
+/** Отмена редактирования — форма возвращается в режим создания. */
+cancelEditPostBtn.addEventListener('click', () => {
+  clearEditPostMode();
 });
 
 /* =======================
@@ -115,6 +145,7 @@ async function loadBlogs() {
       await deleteBlog(blog.id);
       showNotice('Blog deleted');
       resetPosts(blog.id);
+      // После подтверждения удаления обновляем список блогов
       loadBlogs();
     };
 
@@ -129,6 +160,8 @@ async function loadBlogs() {
 ======================= */
 async function selectBlog(blog, li) {
   currentBlogId = blog.id;
+  // При смене блога выходим из режима редактирования поста
+  clearEditPostMode();
 
   document
     .querySelectorAll('.blog-item')
@@ -165,20 +198,17 @@ async function loadPosts(blogId) {
     const actions = document.createElement('div');
     actions.className = 'post-actions';
 
+    // Редактирование: подставляем данные поста в форму выше, переключаем кнопку на «Update»
     const editBtn = document.createElement('button');
     editBtn.textContent = 'Edit';
-    editBtn.onclick = async () => {
-      const newTitle = prompt('New title', post.title);
-      if (!newTitle) return;
-
-      await updatePost(post.id, {
-        title: newTitle,
-        shortDescription: post.shortDescription,
-        content: post.content,
-      });
-
-      showNotice('Post updated');
-      loadPosts(blogId);
+    editBtn.onclick = () => {
+      editingPostId = post.id;
+      createPostForm.elements.title.value = post.title;
+      createPostForm.elements.shortDescription.value = post.shortDescription ?? '';
+      createPostForm.elements.content.value = post.content ?? '';
+      createPostSubmitBtn.textContent = 'Update';
+      cancelEditPostBtn.hidden = false;
+      createPostForm.hidden = false;
     };
 
     const deleteBtn = document.createElement('button');
@@ -188,7 +218,8 @@ async function loadPosts(blogId) {
 
       await deletePost(post.id);
       showNotice('Post deleted');
-      loadPosts(blogId);
+      // После подтверждения удаления обновляем список постов
+      await loadPosts(blogId);
     };
 
     actions.append(editBtn, deleteBtn);

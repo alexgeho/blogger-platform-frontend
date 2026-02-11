@@ -34,6 +34,12 @@
   background: #eee;
 }
 
+/* Скрытие элементов шапки в зависимости от авторизации */
+.admin-link.hidden,
+.auth-actions .hidden {
+  display: none;
+}
+
 /* 🔒 DISABLED STATE */
 .admin-link.disabled {
   opacity: 0.4;

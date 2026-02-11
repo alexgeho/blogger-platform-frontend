@@ -1,3 +1,8 @@
+// src/auth/login.mjs
+// Обработка отправки формы логина. Редирект не делаем — только обновляем кнопки в шапке.
+
+import { updateHeaderAuthState } from './ui.mjs';
+
 const loginForm = document.getElementById('loginForm');
 
 loginForm.addEventListener('submit', async (e) => {
@@ -22,12 +27,14 @@ loginForm.addEventListener('submit', async (e) => {
 
     const data = await res.json();
 
-    // 1️⃣ Save token
+    // Сохраняем токен
     localStorage.setItem('accessToken', data.accessToken);
 
-    // 2️⃣ Redirect immediately
-    window.location.href = '/src/admin/admin.html';
+    // Закрываем форму логина
+    loginForm.classList.remove('open');
 
+    // Обновляем шапку: показываем Admin, скрываем Login/Register (без редиректа)
+    updateHeaderAuthState();
   } catch (err) {
     alert(err.message);
   }

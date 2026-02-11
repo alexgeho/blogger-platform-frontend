@@ -35,25 +35,7 @@ const blogsList = document.getElementById('blogsList');
 const postsSection = document.getElementById('posts');
 const postsList = document.getElementById('postsList');
 
-const adminLink = document.getElementById('adminLink');
-
-/* =======================
-   ADMIN LINK STATE
-======================= */
-
-function updateAdminLink() {
-  if (!adminLink) return;
-
-  const isLoggedIn = !!localStorage.getItem('accessToken');
-
-  if (!isLoggedIn) {
-    adminLink.classList.add('disabled');
-    adminLink.removeAttribute('href');
-  } else {
-    adminLink.classList.remove('disabled');
-    adminLink.setAttribute('href', '/src/admin/admin.html');
-  }
-}
+/* Состояние шапки (Login/Register vs Admin) обновляется в auth/ui.mjs при загрузке и после логина */
 
 /* =======================
    BLOGS
@@ -119,4 +101,3 @@ async function loadPosts() {
 
 await loadBlogs();
 await loadPosts();
-updateAdminLink();

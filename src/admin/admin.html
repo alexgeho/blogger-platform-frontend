@@ -40,11 +40,15 @@
         Select a blog to view or create posts
       </p>
 
+      <!-- Форма и для создания, и для редактирования поста (режим переключается в admin.mjs) -->
       <form id="createPostForm" class="admin-form" hidden>
         <input name="title" placeholder="Post title" required />
         <input name="shortDescription" placeholder="Short description" required />
         <textarea name="content" placeholder="Content" required></textarea>
-        <button type="submit">Create post</button>
+        <div class="form-actions">
+          <button type="submit" id="createPostSubmitBtn">Create post</button>
+          <button type="button" id="cancelEditPostBtn" hidden>Cancel</button>
+        </div>
       </form>
 
       <ul id="adminPostsList"></ul>

@@ -1,12 +1,18 @@
 const API_URL = 'http://localhost:5077';
 
-/* CREATE POST (через блог — уже есть) */
+/** Заголовки с Basic-авторизацией для защищённых эндпоинтов (backend — BasicAuthGuard). */
+function adminHeaders() {
+  return {
+    'Content-Type': 'application/json',
+    Authorization: 'Basic ' + btoa('admin:qwerty'),
+  };
+}
+
+/* CREATE POST (через блог). Эндпоинт защищён BasicAuthGuard — передаём adminHeaders. */
 export async function createPost(blogId, dto) {
   const response = await fetch(`${API_URL}/blogs/${blogId}/posts`, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: adminHeaders(),
     body: JSON.stringify(dto),
   });
 
@@ -17,7 +23,7 @@ export async function createPost(blogId, dto) {
   return response.json();
 }
 
-/* GET POSTS BY BLOG */
+/* GET POSTS BY BLOG — публичный эндпоинт, авторизация не нужна. */
 export async function getPostsByBlog(blogId) {
   const response = await fetch(`${API_URL}/blogs/${blogId}/posts`);
 
@@ -28,13 +34,11 @@ export async function getPostsByBlog(blogId) {
   return response.json();
 }
 
-/* UPDATE POST */
+/* UPDATE POST. Эндпоинт защищён — передаём Basic-авторизацию. */
 export async function updatePost(postId, dto) {
   const response = await fetch(`${API_URL}/posts/${postId}`, {
     method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: adminHeaders(),
     body: JSON.stringify(dto),
   });
 
@@ -43,10 +47,11 @@ export async function updatePost(postId, dto) {
   }
 }
 
-/* DELETE POST */
+/* DELETE POST. Эндпоинт защищён — передаём Basic-авторизацию. */
 export async function deletePost(postId) {
   const response = await fetch(`${API_URL}/posts/${postId}`, {
     method: 'DELETE',
+    headers: adminHeaders(),
   });
 
   if (!response.ok) {

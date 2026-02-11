@@ -10,7 +10,7 @@
 
 <body>
 
-  <!-- HEADER -->
+  <!-- HEADER: без авторизации видны Login и Register, с авторизацией — Admin (см. auth/ui.mjs) -->
   <header class="header">
     <h1>Blogger Platform</h1>
 
@@ -19,7 +19,8 @@
       <div class="auth-actions">
         <button id="toggleLogin">Login</button>
         <button id="toggleRegister">Register</button>
-        <a href="/src/admin/admin.html" id="adminLink" class="admin-link">
+        <!-- По умолчанию скрыта; показывается в auth/ui.mjs при наличии accessToken -->
+        <a href="/src/admin/admin.html" id="adminLink" class="admin-link hidden">
           Admin
         </a>
       </div>
