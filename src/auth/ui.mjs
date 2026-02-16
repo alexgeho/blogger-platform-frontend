@@ -1,16 +1,19 @@
 // src/auth/ui.mjs
-// Управление шапкой: Login/Register при неавторизованном пользователе, Admin — при авторизованном.
+// Управление шапкой: Login/Register при неавторизованном пользователе, Admin и ник — при авторизованном.
+
+import { getMe } from './me.mjs';
 
 const toggleLogin = document.getElementById('toggleLogin');
 const toggleRegister = document.getElementById('toggleRegister');
 const adminLink = document.getElementById('adminLink');
+const userNicknameEl = document.getElementById('userNickname');
 
 /**
  * Обновляет видимость кнопок в шапке по состоянию авторизации.
- * Не авторизован: показываем Login и Register, скрываем Admin.
- * Авторизован: скрываем Login и Register, показываем Admin.
+ * Не авторизован: показываем Login и Register, скрываем Admin и ник.
+ * Авторизован: скрываем Login и Register, показываем ник и Admin.
  */
-export function updateHeaderAuthState() {
+export async function updateHeaderAuthState() {
   const isLoggedIn = !!localStorage.getItem('accessToken');
 
   if (toggleLogin) {
@@ -28,6 +31,22 @@ export function updateHeaderAuthState() {
     } else {
       adminLink.classList.add('hidden');
       adminLink.removeAttribute('href');
+    }
+  }
+
+  if (userNicknameEl) {
+    if (isLoggedIn) {
+      try {
+        const me = await getMe();
+        userNicknameEl.textContent = me.login ?? '';
+        userNicknameEl.classList.remove('hidden');
+      } catch {
+        userNicknameEl.classList.add('hidden');
+        userNicknameEl.textContent = '';
+      }
+    } else {
+      userNicknameEl.classList.add('hidden');
+      userNicknameEl.textContent = '';
     }
   }
 }

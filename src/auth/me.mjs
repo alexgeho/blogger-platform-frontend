@@ -1,4 +1,4 @@
-async function getMe() {
+export async function getMe() {
   const token = localStorage.getItem('accessToken');
 
   const res = await fetch('http://localhost:5077/auth/me', {

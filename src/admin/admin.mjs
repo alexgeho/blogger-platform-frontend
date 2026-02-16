@@ -135,10 +135,12 @@ async function loadBlogs() {
 
     const openBtn = document.createElement('button');
     openBtn.textContent = 'Posts';
+    openBtn.className = 'btn-posts';
     openBtn.onclick = () => selectBlog(blog, li);
 
     const deleteBtn = document.createElement('button');
     deleteBtn.textContent = 'Delete';
+    deleteBtn.className = 'btn-delete';
     deleteBtn.onclick = async () => {
       if (!confirm('Delete this blog?')) return;
 
@@ -151,6 +153,13 @@ async function loadBlogs() {
 
     actions.append(openBtn, deleteBtn);
     li.append(title, actions);
+
+    // Клик по всей карточке блога — то же, что по кнопке «Posts» (кроме клика по Delete)
+    li.addEventListener('click', (e) => {
+      if (e.target.closest('.btn-delete')) return;
+      selectBlog(blog, li);
+    });
+
     blogsList.appendChild(li);
   });
 }
@@ -193,7 +202,11 @@ async function loadPosts(blogId) {
     li.className = 'post-item';
 
     const title = document.createElement('strong');
-    title.textContent = post.title;
+    const postLink = document.createElement('a');
+    postLink.href = `/src/post/post.html?id=${post.id}`;
+    postLink.textContent = post.title;
+    postLink.className = 'post-item-link';
+    title.appendChild(postLink);
 
     const actions = document.createElement('div');
     actions.className = 'post-actions';
