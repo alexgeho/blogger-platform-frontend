@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Post — Blogger Platform</title>
+</head>
+<body class="post-page">
+  <header class="header">
+    <h1>Blogger Platform</h1>
+    <div class="header-actions">
+      <a href="/" class="btn-back">← На главную</a>
+      <span id="postPageUserNickname" class="user-nickname hidden"></span>
+      <a href="/" id="postPageLogin" class="post-page-auth-link">Login</a>
+      <a href="/" id="postPageRegister" class="post-page-auth-link">Register</a>
+      <a href="/src/admin/admin.html" id="postPageAdmin" class="admin-link hidden">Admin</a>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section id="blogs" class="blogs">
+      <h2>Blogs</h2>
+      <ul id="blogsList"></ul>
+    </section>
+
+    <section class="post-content-area">
+      <nav id="breadcrumbs" class="breadcrumbs" aria-label="Хлебные крошки" hidden></nav>
+    <article id="postArticle" class="post-article" hidden>
+      <h1 id="postTitle" class="post-title"></h1>
+      <div class="post-meta">
+        <span id="postBlogName" class="post-blog"></span>
+        <time id="postCreatedAt" class="post-date"></time>
+      </div>
+      <p id="postShortDescription" class="post-short"></p>
+      <div id="postContent" class="post-content"></div>
+      <footer class="post-likes" id="postLikes" hidden>
+        <span id="likeIcon" class="post-like-icon" role="button" tabindex="0" title="Нравится">👍 <span id="likesCount">0</span></span>
+        <span id="dislikeIcon" class="post-dislike-icon" role="button" tabindex="0" title="Не нравится">👎 <span id="dislikesCount">0</span></span>
+      </footer>
+
+      <!-- Комментарии (для залогиненных — форма + список) -->
+      <section class="post-comments" id="postCommentsSection">
+        <h2 class="comments-title">Комментарии</h2>
+        <div id="commentsAuthNotice" class="comments-auth-notice" hidden>
+          Войдите, чтобы оставить комментарий.
+        </div>
+        <form id="commentForm" class="comment-form" hidden>
+          <textarea name="content" placeholder="Текст комментария (до 300 символов)" rows="3" minlength="1" maxlength="300" required></textarea>
+          <span class="comment-form-hint">До 300 символов</span>
+          <div class="comment-form-actions">
+            <button type="submit" id="commentSubmitBtn">Отправить</button>
+            <button type="button" id="commentCancelEditBtn" class="comment-cancel-btn" hidden>Отмена</button>
+          </div>
+        </form>
+        <ul id="commentsList" class="comments-list"></ul>
+        <div id="commentsLoading" class="comments-loading" hidden>Загрузка комментариев…</div>
+        <div id="commentsError" class="comments-error" hidden></div>
+      </section>
+    </article>
+    <div id="postError" class="post-error" hidden>
+      <p>Пост не найден или произошла ошибка.</p>
+      <a href="/">Вернуться на главную</a>
+    </div>
+    <div id="postLoading" class="post-loading">Загрузка…</div>
+    </section>
+  </main>
+
+  <script type="module" src="./post.mjs"></script>
+</body>
+</html>

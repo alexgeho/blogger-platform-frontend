@@ -17,6 +17,16 @@
   gap: 12px;
 }
 
+.user-nickname {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.user-nickname.hidden {
+  display: none;
+}
+
 .admin-link {
   padding: 6px 12px;
   border-radius: 6px;

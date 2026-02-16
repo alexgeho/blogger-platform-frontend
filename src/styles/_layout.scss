@@ -54,6 +54,13 @@
     border-color 0.2s ease;
 }
 
+#postsList li a.post-list-link {
+  display: block;
+  width: 100%;
+  color: inherit;
+  text-decoration: none;
+}
+
 #postsList li:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
@@ -97,6 +104,12 @@
   background: #f9fafb;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
   transform: translateY(-1px);
+}
+
+#blogsList li.active {
+  background: #eff6ff;
+  border-color: #3b82f6;
+  font-weight: 500;
 }
 
 

@@ -25,6 +25,17 @@ const state = {
   activeBlogId: null,
 };
 
+/** Синхронизирует URL с выбранным блогом (?blog=id) для хлебных крошек и шаринга. */
+function updateUrlForBlog(blogId) {
+  const url = new URL(window.location.href);
+  if (blogId) {
+    url.searchParams.set('blog', blogId);
+  } else {
+    url.searchParams.delete('blog');
+  }
+  window.history.replaceState({}, '', url.pathname + url.search);
+}
+
 /* =======================
    DOM REFERENCES
 ======================= */
@@ -49,9 +60,13 @@ async function loadBlogs() {
   const allItem = document.createElement('li');
   allItem.textContent = 'All posts';
   allItem.style.cursor = 'pointer';
+  if (!state.activeBlogId) allItem.classList.add('active');
 
   allItem.onclick = () => {
     state.activeBlogId = null;
+    updateUrlForBlog(null);
+    blogsList.querySelectorAll('li').forEach((el) => el.classList.remove('active'));
+    allItem.classList.add('active');
     loadPosts();
   };
 
@@ -61,9 +76,13 @@ async function loadBlogs() {
     const li = document.createElement('li');
     li.textContent = blog.name;
     li.style.cursor = 'pointer';
+    if (state.activeBlogId === blog.id) li.classList.add('active');
 
     li.onclick = () => {
       state.activeBlogId = blog.id;
+      updateUrlForBlog(blog.id);
+      blogsList.querySelectorAll('li').forEach((el) => el.classList.remove('active'));
+      li.classList.add('active');
       loadPosts();
     };
 
@@ -88,7 +107,11 @@ async function loadPosts() {
     if (!post.title) return;
 
     const li = document.createElement('li');
-    li.textContent = post.title;
+    const link = document.createElement('a');
+    link.href = `/src/post/post.html?id=${post.id}`;
+    link.textContent = post.title;
+    link.className = 'post-list-link';
+    li.appendChild(link);
     postsList.appendChild(li);
   });
 
@@ -98,6 +121,10 @@ async function loadPosts() {
 /* =======================
    INIT
 ======================= */
+
+const urlParams = new URLSearchParams(window.location.search);
+const blogIdFromUrl = urlParams.get('blog');
+if (blogIdFromUrl) state.activeBlogId = blogIdFromUrl;
 
 await loadBlogs();
 await loadPosts();
