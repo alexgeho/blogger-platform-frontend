@@ -107,11 +107,10 @@ async function loadPosts() {
     if (!post.title) return;
 
     const li = document.createElement('li');
-    const link = document.createElement('a');
-    link.href = `/src/post/post.html?id=${post.id}`;
-    link.textContent = post.title;
-    link.className = 'post-list-link';
-    li.appendChild(link);
+    li.textContent = post.title;
+    li.onclick = () => {
+      window.location.href = `/src/post/post.html?id=${post.id}`;
+    };
     postsList.appendChild(li);
   });
 
