@@ -1,6 +1,6 @@
-// Комментарии к постам — API Express-бэкенда (bloggerPlatform)
+// Комментарии к постам — API NestJS (blogger-platform-Nestjs)
 
-const EXPRESS_BASE_URL = 'http://localhost:5003';
+const BASE_URL = 'http://localhost:5077';
 
 function authHeaders() {
   const token = localStorage.getItem('accessToken');
@@ -20,7 +20,7 @@ export async function getCommentsByPostId(postId, params = {}) {
   if (params.sortBy) searchParams.set('sortBy', params.sortBy);
   if (params.sortDirection) searchParams.set('sortDirection', params.sortDirection);
 
-  const url = `${EXPRESS_BASE_URL}/posts/${postId}/comments${searchParams.toString() ? `?${searchParams}` : ''}`;
+  const url = `${BASE_URL}/posts/${postId}/comments${searchParams.toString() ? `?${searchParams}` : ''}`;
   const res = await fetch(url, {
     headers: { ...authHeaders(), Accept: 'application/json' },
   });
@@ -39,7 +39,7 @@ export async function createComment(postId, content) {
   const token = localStorage.getItem('accessToken');
   if (!token) throw new Error('Войдите в аккаунт');
 
-  const res = await fetch(`${EXPRESS_BASE_URL}/posts/${postId}/comments`, {
+  const res = await fetch(`${BASE_URL}/posts/${postId}/comments`, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${token}`,
@@ -65,7 +65,7 @@ export async function createComment(postId, content) {
  * Обновить комментарий PUT /comments/:id (только автор)
  */
 export async function updateComment(commentId, content) {
-  const res = await fetch(`${EXPRESS_BASE_URL}/comments/${commentId}`, {
+  const res = await fetch(`${BASE_URL}/comments/${commentId}`, {
     method: 'PUT',
     headers: {
       ...authHeaders(),
@@ -86,7 +86,7 @@ export async function updateComment(commentId, content) {
  * Удалить комментарий DELETE /comments/:id (только автор)
  */
 export async function deleteComment(commentId) {
-  const res = await fetch(`${EXPRESS_BASE_URL}/comments/${commentId}`, {
+  const res = await fetch(`${BASE_URL}/comments/${commentId}`, {
     method: 'DELETE',
     headers: authHeaders(),
   });
